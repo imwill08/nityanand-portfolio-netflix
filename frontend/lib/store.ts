@@ -19,7 +19,19 @@ export interface ApiError {
 const AUTH = "portfolio-admin-auth";
 const TOKEN_KEY = "portfolio-jwt-token";
 
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+export function getApiBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (envUrl && envUrl.trim().length > 0) {
+    const trimmed = envUrl.trim().replace(/\/+$/, "");
+    return trimmed.endsWith("/api") ? trimmed : `${trimmed}/api`;
+  }
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+    return "http://localhost:5000/api";
+  }
+  return "https://nityanand-portfolio-netflix.onrender.com/api";
+}
+
+export const API_BASE = getApiBaseUrl();
 
 // Fallback demo credentials
 export const ADMIN_USER = "admin";
