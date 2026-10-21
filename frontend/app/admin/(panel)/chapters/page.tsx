@@ -158,7 +158,7 @@ export default function ChaptersPage() {
         </form>
       ) : <div className="panel"><h2>No chapters</h2><p className="hint">Add your first chapter.</p></div>}
 
-      {preview && form && <ChapterPreview chapter={form} chapters={chapters} idx={sel} onClose={() => setPreview(false)} />}
+      {preview && form && <ChapterPreview chapter={form} chapters={chapters} idx={sel} ownerName={data.owner?.name} onClose={() => setPreview(false)} />}
       {toast && <div className="toast" role="status">{toast}</div>}
     </div>
   );

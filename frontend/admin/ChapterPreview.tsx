@@ -7,7 +7,7 @@ import type { Card, Chapter } from "@/data/portfolio";
 import { buildRows, storyScenes } from "@/lib/rows";
 
 /** Full-screen preview of a (possibly unsaved) chapter, rendered with the real site components. */
-export default function ChapterPreview({ chapter, chapters, idx, onClose }: { chapter: Chapter; chapters: Chapter[]; idx: number; onClose: () => void }) {
+export default function ChapterPreview({ chapter, chapters, idx, onClose, ownerName }: { chapter: Chapter; chapters: Chapter[]; idx: number; onClose: () => void; ownerName?: string }) {
   const [story, setStory] = useState<Story | null>(null);
   const [mobile, setMobile] = useState(false);
   useEffect(() => {
@@ -37,8 +37,8 @@ export default function ChapterPreview({ chapter, chapters, idx, onClose }: { ch
       </div>
       <div className="pv-stage">
         <div className={`pv ${mobile ? "m" : ""}`}>
-          <div className="pv-nav"><span className="logo">NITYANAND</span>{list.slice(0, 5).map((c) => <a key={c.k}>{c.label}</a>)}</div>
-          <HeroSection p={p} onAction={(a) => (a === "play" ? play(0) : undefined)} />
+          <div className="pv-nav"><span className="logo">{(ownerName || "NITYANAND").toUpperCase()}</span>{list.slice(0, 5).map((c) => <a key={c.k}>{c.label}</a>)}</div>
+          <HeroSection p={p} onAction={(a) => (a === "play" ? play(0) : undefined)} ownerName={ownerName} />
           <main id="rows">{buildRows(p, list, idx).map((r, i) => <ProjectCarousel key={r.h + i} row={r} grad={p.c} onCard={onCard} />)}</main>
         </div>
       </div>

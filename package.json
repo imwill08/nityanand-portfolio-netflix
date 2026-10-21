@@ -1,0 +1,12 @@
+{
+  "name": "nityanand-portfolio-netflix-root",
+  "version": "1.0.0",
+  "description": "Full-stack Netflix-style Portfolio (NestJS + MongoDB + Next.js)",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run start:dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:backend": "npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "build": "npm --prefix backend run build && npm --prefix frontend run build"
+  }
+}

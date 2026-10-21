@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import Icon from "./Icon";
 import type { Chapter } from "@/data/portfolio";
-interface Props { chapter: Chapter; chapters: Chapter[]; onGo: (i: number | "home") => void; }
-export default function Navbar({ chapter, chapters, onGo }: Props) {
+interface Props { chapter: Chapter; chapters: Chapter[]; onGo: (i: number | "home") => void; ownerName?: string; }
+export default function Navbar({ chapter, chapters, onGo, ownerName }: Props) {
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -13,10 +13,11 @@ export default function Navbar({ chapter, chapters, onGo }: Props) {
   }, []);
   const go = (v: number | "home") => { setOpen(false); onGo(v); };
   const grad = `linear-gradient(135deg,${chapter.c[0]},${chapter.c[1]})`;
+  const brand = (ownerName || "NITYANAND").toUpperCase();
   return (
     <>
       <nav className={`top${solid || open ? " solid" : ""}`} aria-label="Main">
-        <button className="logo" onClick={() => go("home")} aria-label="Home">NITYANAND</button>
+        <button className="logo" onClick={() => go("home")} aria-label="Home">{brand}</button>
         {chapters.slice(0, 5).map((c, i) => <a key={c.k} role="button" tabIndex={0} onClick={() => go(i)} onKeyDown={(e) => e.key === "Enter" && go(i)}>{c.label}</a>)}
         <button id="me" onClick={() => go("home")} aria-label="Switch chapter"><span className="av" style={{ background: grad }}><Icon name={chapter.icon} /></span><span>Switch</span></button>
         <a className="login-btn" href="/admin/login">Login</a>

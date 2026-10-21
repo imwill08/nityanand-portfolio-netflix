@@ -9,9 +9,10 @@ export default function LoginPage() {
   const [u, setU] = useState("");
   const [p, setP] = useState("");
   const [err, setErr] = useState("");
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(u.trim(), p)) router.replace("/admin");
+    const ok = await login(u.trim(), p);
+    if (ok) router.replace("/admin");
     else setErr("Incorrect username or password.");
   };
   return (

@@ -35,12 +35,12 @@ export default function Portfolio() {
 
   return (
     <>
-      <SplashScreen />
+      <SplashScreen ownerName={owner.name} />
       <ProfileSelector owner={owner} chapters={chapters} hidden={cur !== null} onPick={pick} />
       {cur !== null && p && (
         <div id="app" style={{ display: "block" }}>
-          <Navbar chapter={p} chapters={chapters} onGo={nav} />
-          <HeroSection p={p} onAction={action} />
+          <Navbar chapter={p} chapters={chapters} onGo={nav} ownerName={owner.name} />
+          <HeroSection p={p} onAction={action} ownerName={owner.name} />
           <main id="rows">{buildRows(p, chapters, idx).map((r, i) => <ProjectCarousel key={r.h + i} row={r} grad={p.c} onCard={onCard} />)}</main>
         </div>
       )}
