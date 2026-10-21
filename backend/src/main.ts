@@ -9,11 +9,27 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 5000;
-  const frontendUrl = configService.get<string>('FRONTEND_URL') || 'http://localhost:3000';
+  const frontendUrl = configService.get<string>('FRONTEND_URL');
+  const allowedOrigins = frontendUrl
+    ? frontendUrl.split(',').map((o) => o.trim())
+    : ['http://localhost:3000', 'http://127.0.0.1:3000'];
 
   // Enable CORS so the Next.js frontend can connect
   app.enableCors({
-    origin: [frontendUrl, 'http://localhost:3000', 'http://127.0.0.1:3000'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, curl, server-to-server)
+      if (!origin) return callback(null, true);
+      if (
+        allowedOrigins.includes('*') ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost') ||
+        origin.includes('127.0.0.1')
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
@@ -29,8 +45,8 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(port);
-  logger.log(`Portfolio Nest.js backend is running on: http://localhost:${port}/api`);
+  await app.listen(port, '0.0.0.0');
+  logger.log(`Portfolio Nest.js backend is running on: http://0.0.0.0:${port}/api`);
 }
 
 bootstrap();

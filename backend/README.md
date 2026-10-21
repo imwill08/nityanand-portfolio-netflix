@@ -24,8 +24,23 @@ Production-ready NestJS REST API with MongoDB Atlas (Mongoose) and JWT Authentic
 
 ## Running the Backend
 
+### Development Mode (with hot-reload):
 ```bash
 cd backend
 npm run start:dev
+# or: npm run dev
 ```
-Server runs at `http://localhost:5000/api`.
+
+### Production Mode:
+```bash
+cd backend
+npm run build
+npm run start:prod
+```
+
+## Render Deployment Settings
+- **Root Directory:** `backend`
+- **Build Command:** `npm install && npm run build`
+- **Start Command:** `npm run start:prod` (or `node dist/main`)
+
+Server runs at `http://localhost:5000/api` (or dynamically assigned `$PORT` on Render).
