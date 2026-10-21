@@ -102,7 +102,7 @@ export class PortfolioChapter {
   @Prop({ type: [String], default: [] })
   scenes?: string[];
 
-  @Prop({ type: [[String]], default: [['▶ Play story', 'play'], ['ⓘ Next chapter', 'next']] })
+  @Prop({ type: [[String]], default: [['Play story', 'play'], ['Next chapter', 'next']] })
   buttons?: [string, 'play' | 'next' | 'mail'][];
 
   @Prop({ type: [Object], default: [] })

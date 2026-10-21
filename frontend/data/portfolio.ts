@@ -40,7 +40,7 @@ export const chapters: Chapter[] = [
   { k: 4, icon: "film", c: ["#FF6B35", "#702209"], label: "Projects", title: "Stories worth telling", match: 99, year: "10 products", role: "Portfolio", where: "5 featured, 5 more", summary: "Five featured products from TechGropse. Pick one to watch its story.", rowTitle: "Featured projects", cards: featured },
   { k: 5, icon: "user", c: ["#00B8A9", "#03403b"], label: "About me", title: "Know more about me", match: 100, year: "4 sections", role: "About", where: "Toolkit, education, certificates, contact", summary: "Software Developer building responsive, reusable web apps with React.js, Next.js, TypeScript, Node.js and Express.js.",
     scenes: ["Software Developer building dashboards and booking platforms, connecting frontends to APIs, with a focus on clear, reusable code.", "Toolkit: React.js, Next.js, TypeScript, Node.js, Express.js, Redux Toolkit, TanStack Query, Tailwind CSS, MySQL, PostgreSQL, MongoDB.", "Education: B.E. in Computer Science Engineering, Chandigarh University (2021 – 2025).", `Contact: ${owner.email}, ${owner.phone}.`],
-    buttons: [["▶ Play story", "play"], ["Email me", "mail"]],
+    buttons: [["Play story", "play"], ["Email me", "mail"]],
     rows: [
       { h: "My toolkit", cards: toolkit.map((x, i) => ({ t: x[0], d: x[1], sc: [x[1], x[2]], n: i + 1 })) },
       { h: "Education", cards: [{ t: "B.E. Computer Science Engineering", d: "Chandigarh University, Punjab — 2021 to 2025" }, { t: "Intermediate (BSEB, PCMB)", d: "Ram Naresh Senyai, Kurtha, Arwal, Bihar — 2019 to 2021" }, { t: "Matriculation (CBSE)", d: "Army Public School, Dehradun — 2018 to 2019" }] },

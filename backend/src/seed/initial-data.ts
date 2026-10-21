@@ -25,7 +25,7 @@ export const initialPortfolioData = {
         "Blitz Learning Technologies (Jun — Dec 2022): supported website features and bug fixing, plus marketing creatives and AutoCAD-related tasks.",
       ],
       rows: [],
-      buttons: [["▶ Play story", "play"], ["ⓘ Next chapter", "next"]],
+      buttons: [["Play story", "play"], ["Next chapter", "next"]],
     },
     {
       k: 2,
@@ -45,7 +45,7 @@ export const initialPortfolioData = {
         "Admin Dashboard: built screens for employee lifecycle management and operational reporting.",
       ],
       rows: [],
-      buttons: [["▶ Play story", "play"], ["ⓘ Next chapter", "next"]],
+      buttons: [["Play story", "play"], ["Next chapter", "next"]],
     },
     {
       k: 3,
@@ -65,7 +65,7 @@ export const initialPortfolioData = {
         "Worked on 10 products, including Yumzy, Mirhal, Sahalat, Bookly and PeekaBox.",
       ],
       rows: [],
-      buttons: [["▶ Play story", "play"], ["ⓘ Next chapter", "next"]],
+      buttons: [["Play story", "play"], ["Next chapter", "next"]],
     },
     {
       k: 4,
@@ -79,7 +79,7 @@ export const initialPortfolioData = {
       where: "5 featured, 5 more",
       summary: "Five featured products from TechGropse. Pick one to watch its story.",
       points: [],
-      buttons: [["▶ Play story", "play"], ["ⓘ Next chapter", "next"]],
+      buttons: [["Play story", "play"], ["Next chapter", "next"]],
       rows: [
         {
           h: "Featured projects",
@@ -176,7 +176,7 @@ export const initialPortfolioData = {
         "Education: B.E. in Computer Science Engineering, Chandigarh University (2021 — 2025).",
         "Contact: royanand729@gmail.com, +91 98375 06732.",
       ],
-      buttons: [["▶ Play story", "play"], ["Email me", "mail"]],
+      buttons: [["Play story", "play"], ["Email me", "mail"]],
       rows: [
         {
           h: "My toolkit",

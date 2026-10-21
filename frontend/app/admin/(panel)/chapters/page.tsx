@@ -9,7 +9,7 @@ const ACTIONS: ["play" | "next" | "mail", string][] = [["play", "Play story"], [
 const lines = (s: string) => s.split("\n");
 const blankChapter = (k: number): Chapter => ({
   k, icon: "film", c: ["#E50914", "#5a050b"], label: "New", title: "New chapter", match: 90, year: "2025", role: "Role", where: "Company",
-  summary: "Describe this chapter.", points: [], rows: [], buttons: [["▶ Play story", "play"], ["ⓘ Next chapter", "next"]],
+  summary: "Describe this chapter.", points: [], rows: [], buttons: [["Play story", "play"], ["Next chapter", "next"]],
 });
 
 export default function ChaptersPage() {
