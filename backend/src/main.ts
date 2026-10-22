@@ -9,29 +9,77 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 5000;
-  const frontendUrl = configService.get<string>('FRONTEND_URL');
-  const allowedOrigins = frontendUrl
-    ? frontendUrl.split(',').map((o) => o.trim())
-    : ['http://localhost:3000', 'http://127.0.0.1:3000'];
+  const isProduction = configService.get<string>('NODE_ENV') === 'production';
+  const frontendUrlEnv = configService.get<string>('FRONTEND_URL') || '';
 
-  // Enable CORS so the Next.js frontend can connect
+  // Parse comma-separated FRONTEND_URL entries (e.g., http://localhost:3000,https://my-app.vercel.app)
+  const configuredOrigins = frontendUrlEnv
+    .split(',')
+    .map((o) => o.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+
+  // Default allowed local development origins
+  const devOrigins = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://nityanand-portfolio-netflix.vercel.app',
+  ];
+
+  const allowedOrigins = Array.from(
+    new Set([...configuredOrigins, ...(isProduction ? [] : devOrigins)]),
+  );
+
+  logger.log(
+    `Configured CORS allowed origins: ${allowedOrigins.length > 0 ? allowedOrigins.join(', ') : 'None'}`,
+  );
+
+  // Secure CORS configuration
   app.enableCors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (mobile apps, curl, server-to-server)
-      if (!origin) return callback(null, true);
-      if (
-        allowedOrigins.includes('*') ||
-        allowedOrigins.includes(origin) ||
-        origin.endsWith('.vercel.app') ||
-        origin.includes('localhost') ||
-        origin.includes('127.0.0.1')
-      ) {
+      // Allow requests with no origin (such as mobile apps, Postman, curl, server-to-server)
+      if (!origin) {
         return callback(null, true);
       }
-      return callback(null, true);
+
+      const normalizedOrigin = origin.replace(/\/$/, '');
+
+      // Check against explicit allowed origins or wildcard patterns (e.g., https://*.vercel.app)
+      const isAllowed = allowedOrigins.some((allowed) => {
+        if (allowed === normalizedOrigin) return true;
+        if (allowed.includes('*')) {
+          const regex = new RegExp(
+            `^${allowed.replace(/\./g, '\\.').replace(/\*/g, '[a-zA-Z0-9_-]+')}$`,
+          );
+          return regex.test(normalizedOrigin);
+        }
+        return false;
+      });
+
+      if (isAllowed) {
+        return callback(null, true);
+      }
+
+      // In non-production, permit any localhost / 127.0.0.1 port for flexibility during development
+      if (!isProduction && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      // Reject unauthorized origins
+      logger.warn(`[CORS] Rejected request from unauthorized origin: ${origin}`);
+      return callback(null, false);
     },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'X-Requested-With',
+      'Origin',
+    ],
     credentials: true,
+    maxAge: 86400, // Cache preflight OPTIONS responses for 24 hours
   });
 
   // Global prefix for API endpoints: e.g. /api/portfolio, /api/auth/login

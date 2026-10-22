@@ -24,7 +24,7 @@ export default function LoginPage() {
         <div className="fld"><input id="u" aria-label="Username" placeholder="Username" autoComplete="username" value={u} onChange={(e) => setU(e.target.value)} required /></div>
         <div className="fld"><input id="p" aria-label="Password" placeholder="Password" type="password" autoComplete="current-password" value={p} onChange={(e) => setP(e.target.value)} required /></div>
         <button className="abtn" type="submit">Sign In</button>
-        <p className="login-note">Demo login: <code>admin</code> / <code>admin123</code><br /><Link href="/">← Back to portfolio</Link></p>
+        {/* <p className="login-note">Demo login: <code>admin</code> / <code>admin123</code><br /><Link href="/">← Back to portfolio</Link></p> */}
       </form>
     </main>
   );
