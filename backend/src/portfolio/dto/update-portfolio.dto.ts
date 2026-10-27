@@ -18,6 +18,9 @@ export class UpdateProfileDto {
 
   @IsOptional()
   github?: string;
+
+  @IsOptional()
+  avatar?: string;
 }
 
 export class UpdatePortfolioDto {

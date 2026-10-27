@@ -10,6 +10,7 @@ import ApiErrorModal from "./ApiErrorModal";
 import type { Card } from "@/data/portfolio";
 import { usePortfolioData } from "@/lib/store";
 import { buildRows, storyScenes } from "@/lib/rows";
+import { getCardImage, CHAPTER_COVER_IMAGES } from "@/lib/cardImages";
 
 export default function Portfolio() {
   const { data, error, clearError, refetch, isFallback } = usePortfolioData();
@@ -39,6 +40,7 @@ export default function Portfolio() {
       match: p.match,
       tags: [p.role, p.year],
       start,
+      img: CHAPTER_COVER_IMAGES[p.k],
     });
   };
 
@@ -58,6 +60,7 @@ export default function Portfolio() {
       match: p.match,
       tags: c.r ? [c.r] : [],
       outcome: c.o,
+      img: getCardImage(c, p?.k),
     });
   };
 

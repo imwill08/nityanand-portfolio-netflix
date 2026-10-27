@@ -5,6 +5,7 @@ import ProjectCarousel from "@/components/ProjectCarousel";
 import StoryModal, { type Story } from "@/components/StoryModal";
 import type { Card, Chapter } from "@/data/portfolio";
 import { buildRows, storyScenes } from "@/lib/rows";
+import { getCardImage, CHAPTER_COVER_IMAGES } from "@/lib/cardImages";
 
 /** Full-screen preview of a (possibly unsaved) chapter, rendered with the real site components. */
 export default function ChapterPreview({ chapter, chapters, idx, onClose, ownerName }: { chapter: Chapter; chapters: Chapter[]; idx: number; onClose: () => void; ownerName?: string }) {
@@ -19,12 +20,12 @@ export default function ChapterPreview({ chapter, chapters, idx, onClose, ownerN
 
   const p = chapter;
   const list = chapters.map((c, i) => (i === idx ? p : c));
-  const play = (start = 0) => setStory({ title: p.title, scenes: storyScenes(p), c: p.c, match: p.match, tags: [p.role, p.year], start });
+  const play = (start = 0) => setStory({ title: p.title, scenes: storyScenes(p), c: p.c, match: p.match, tags: [p.role, p.year], start, img: CHAPTER_COVER_IMAGES[p.k] });
   const onCard = (c: Card) => {
     if (c.at != null && c.at < 0) return;
     if (c.at != null) return play(c.at);
     if (c.go) return;
-    setStory({ title: c.t, scenes: c.sc?.length ? c.sc : [c.d ?? c.t], c: p.c, match: p.match, tags: c.r ? [c.r] : [], outcome: c.o });
+    setStory({ title: c.t, scenes: c.sc?.length ? c.sc : [c.d ?? c.t], c: p.c, match: p.match, tags: c.r ? [c.r] : [], outcome: c.o, img: getCardImage(c, p?.k) });
   };
 
   return (

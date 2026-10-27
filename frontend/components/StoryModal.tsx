@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import type { Gradient } from "@/data/portfolio";
-export interface Story { title: string; scenes: string[]; c: Gradient; match: number; tags: string[]; outcome?: string; start?: number; }
+export interface Story { title: string; scenes: string[]; c: Gradient; match: number; tags: string[]; outcome?: string; start?: number; img?: string; }
 export default function StoryModal({ story, onClose }: { story: Story; onClose: () => void }) {
   const [i, setI] = useState(story.start ?? 0);
   const [paused, setPaused] = useState(false);
@@ -27,7 +27,15 @@ export default function StoryModal({ story, onClose }: { story: Story; onClose: 
           </svg>
         </button>
         <div className={`player${paused ? " paused" : ""}`}>
-          <div style={{ position: "absolute", inset: 0, background: `linear-gradient(120deg,${story.c[0]},${story.c[1]})` }} />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: story.img
+                ? `linear-gradient(rgba(10,10,10,0.65), rgba(10,10,10,0.85)), url("${story.img}") center/cover no-repeat`
+                : `linear-gradient(120deg,${story.c[0]},${story.c[1]})`,
+            }}
+          />
           <div id="st" key={i}>{story.scenes[i]}</div>
           <div className="ctrl">
             <button

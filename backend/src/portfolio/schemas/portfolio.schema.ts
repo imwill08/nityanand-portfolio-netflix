@@ -20,6 +20,9 @@ export class Owner {
 
   @Prop({ default: 'https://github.com/' })
   github: string;
+
+  @Prop({ default: 'https://media.licdn.com/dms/image/v2/D5603AQG5_zj4hbSbnw/profile-displayphoto-scale_400_400/B56aF3H1p6H0Ag-/0/1792999909826?e=1794441600&v=beta&t=6coUTXkIXtU-SGnUP0Rqua5w_PdeefJWI0nTrI0ibM8' })
+  avatar?: string;
 }
 
 @Schema({ _id: false })
@@ -53,6 +56,9 @@ export class PortfolioCard {
 
   @Prop()
   at?: number;
+
+  @Prop()
+  img?: string;
 }
 
 @Schema({ _id: false })
@@ -107,6 +113,9 @@ export class PortfolioChapter {
 
   @Prop({ type: [Object], default: [] })
   rows?: PortfolioRow[];
+
+  @Prop()
+  bg?: string;
 }
 
 import { HydratedDocument } from 'mongoose';

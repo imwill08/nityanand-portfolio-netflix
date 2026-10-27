@@ -114,12 +114,12 @@ export function usePortfolioData() {
       if (remote) {
         // Use EXACT data returned by API (even if chapters is empty [])
         setData({
-          owner: remote.owner || { name: "", email: "", phone: "", tel: "", linkedin: "", github: "" },
+          owner: remote.owner || { name: "", email: "", phone: "", tel: "", linkedin: "", github: "", avatar: "" },
           chapters: Array.isArray(remote.chapters) ? remote.chapters : [],
         });
       } else {
         setData({
-          owner: { name: "", email: "", phone: "", tel: "", linkedin: "", github: "" },
+          owner: { name: "", email: "", phone: "", tel: "", linkedin: "", github: "", avatar: "" },
           chapters: [],
         });
       }

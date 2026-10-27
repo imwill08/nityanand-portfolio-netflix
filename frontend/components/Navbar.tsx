@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Icon from "./Icon";
 import type { Chapter } from "@/data/portfolio";
 import { useAdminAuth } from "@/lib/store";
+import { getChapterHeroImage } from "@/lib/cardImages";
 
 interface Props {
   chapter: Chapter;
@@ -50,8 +51,16 @@ export default function Navbar({ chapter, chapters, onGo, ownerName }: Props) {
         ))}
 
         <button id="me" onClick={() => go("home")} aria-label="Switch chapter">
-          <span className="av" style={{ background: grad }}>
-            <Icon name={chapter.icon} />
+          <span
+            className="av"
+            style={{
+              background:
+                chapter.k === 5
+                  ? `url('${getChapterHeroImage(chapter)}') center/cover no-repeat`
+                  : grad,
+            }}
+          >
+            {chapter.k !== 5 && <Icon name={chapter.icon} />}
           </span>
           <span>Switch</span>
         </button>

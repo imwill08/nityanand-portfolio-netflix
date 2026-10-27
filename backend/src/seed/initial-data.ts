@@ -6,6 +6,7 @@ export const initialPortfolioData = {
     tel: "+919837506732",
     linkedin: "https://www.linkedin.com/",
     github: "https://github.com/",
+    avatar: "https://media.licdn.com/dms/image/v2/D5603AQG5_zj4hbSbnw/profile-displayphoto-scale_400_400/B56aF3H1p6H0Ag-/0/1792999909826?e=1794441600&v=beta&t=6coUTXkIXtU-SGnUP0Rqua5w_PdeefJWI0nTrI0ibM8",
   },
   chapters: [
     {
@@ -26,6 +27,7 @@ export const initialPortfolioData = {
       ],
       rows: [],
       buttons: [["Play story", "play"], ["Next chapter", "next"]],
+      bg: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1920&q=80",
     },
     {
       k: 2,
@@ -46,6 +48,7 @@ export const initialPortfolioData = {
       ],
       rows: [],
       buttons: [["Play story", "play"], ["Next chapter", "next"]],
+      bg: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1920&q=80",
     },
     {
       k: 3,
@@ -66,6 +69,7 @@ export const initialPortfolioData = {
       ],
       rows: [],
       buttons: [["Play story", "play"], ["Next chapter", "next"]],
+      bg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1920&q=80",
     },
     {
       k: 4,
@@ -80,6 +84,7 @@ export const initialPortfolioData = {
       summary: "Five featured products from TechGropse. Pick one to watch its story.",
       points: [],
       buttons: [["Play story", "play"], ["Next chapter", "next"]],
+      bg: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=1920&q=80",
       rows: [
         {
           h: "Featured projects",
@@ -89,6 +94,7 @@ export const initialPortfolioData = {
               d: "Restaurant and admin dashboards",
               r: "React Developer",
               o: "Next.js · Redux Toolkit · TanStack Query",
+              img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
               sc: [
                 "React Developer — Restaurant and admin dashboards",
                 "Built restaurant and admin dashboards with Next.js, Redux Toolkit and TanStack Query.",
@@ -102,6 +108,7 @@ export const initialPortfolioData = {
               d: "Hotels, vehicle rental, flights and activities",
               r: "React Developer",
               o: "Firebase notifications · vendor payouts",
+              img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80",
               sc: [
                 "React Developer — Hotels, vehicle rental, flights and activities",
                 "Worked across hotel, vehicle rental, flight and activity modules.",
@@ -114,6 +121,7 @@ export const initialPortfolioData = {
               d: "Wallet, withdrawals and audit logs",
               r: "React Developer",
               o: "Arabic / English RTL",
+              img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
               sc: [
                 "React Developer — Wallet, withdrawals and audit logs",
                 "Built wallet and transaction views.",
@@ -126,6 +134,7 @@ export const initialPortfolioData = {
               d: "Coupons, disputes and revenue reports",
               r: "React Developer",
               o: "React Query · ApexCharts",
+              img: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=800&q=80",
               sc: [
                 "React Developer — Coupons, disputes and revenue reports",
                 "Developed appointment management and category management features.",
@@ -138,6 +147,7 @@ export const initialPortfolioData = {
               d: "Locker and branch administration",
               r: "React Developer",
               o: "Live status via WebSockets",
+              img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
               sc: [
                 "React Developer — Locker and branch administration",
                 "Built smart-locker administration features.",
@@ -150,11 +160,11 @@ export const initialPortfolioData = {
         {
           h: "From the archives",
           cards: [
-            { t: "Simi — Real Estate Admin", d: "Property bidding, agent verification, wallet transactions", dead: true },
-            { t: "Smart Report AI", d: "Vehicle inspection and technician management (React + Jotai)", dead: true },
-            { t: "Artera", d: "Booking interfaces, KPI charts, loyalty and provider onboarding", dead: true },
-            { t: "Reeba", d: "Client and coach interfaces with calendar scheduling and RTL", dead: true },
-            { t: "Shagifa A1 Auto Star Motors", d: "Public site, employee portal, admin panel, bulk CSV workflows", dead: true },
+            { t: "Simi — Real Estate Admin", d: "Property bidding, agent verification, wallet transactions", dead: true, img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" },
+            { t: "Smart Report AI", d: "Vehicle inspection and technician management (React + Jotai)", dead: true, img: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80" },
+            { t: "Artera", d: "Booking interfaces, KPI charts, loyalty and provider onboarding", dead: true, img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" },
+            { t: "Reeba", d: "Client and coach interfaces with calendar scheduling and RTL", dead: true, img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" },
+            { t: "Shagifa A1 Auto Star Motors", d: "Public site, employee portal, admin panel, bulk CSV workflows", dead: true, img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" },
           ],
         },
       ],
@@ -177,42 +187,43 @@ export const initialPortfolioData = {
         "Contact: royanand729@gmail.com, +91 98375 06732.",
       ],
       buttons: [["Play story", "play"], ["Email me", "mail"]],
+      bg: "https://media.licdn.com/dms/image/v2/D5603AQG5_zj4hbSbnw/profile-displayphoto-scale_400_400/B56aF3H1p6H0Ag-/0/1792999909826?e=1794441600&v=beta&t=6coUTXkIXtU-SGnUP0Rqua5w_PdeefJWI0nTrI0ibM8",
       rows: [
         {
           h: "My toolkit",
           cards: [
-            { t: "Frontend", d: "React.js, Next.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS and Bootstrap.", sc: ["React.js, Next.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS and Bootstrap.", "React · Next.js · TypeScript · Tailwind"], n: 1 },
-            { t: "State & data", d: "Redux Toolkit, TanStack Query and Jotai, with ApexCharts and Chart.js for dashboards.", sc: ["Redux Toolkit, TanStack Query and Jotai, with ApexCharts and Chart.js for dashboards.", "Redux · Query · Jotai · Charts"], n: 2 },
-            { t: "Backend & databases", d: "Node.js, Express.js, MySQL, PostgreSQL, MongoDB, Firebase and WebSockets.", sc: ["Node.js, Express.js, MySQL, PostgreSQL, MongoDB, Firebase and WebSockets.", "Node · Express · Database · Realtime"], n: 3 },
-            { t: "Tools & testing", d: "REST APIs, GraphQL, Git, Docker, Google Maps API, i18next (RTL/LTR) and React Testing Library.", sc: ["REST APIs, GraphQL, Git, Docker, Google Maps API, i18next (RTL/LTR) and React Testing Library.", "API · Git · Docker · Test"], n: 4 },
-            { t: "Reusable components", d: "Consistent, reusable UI components that make new features faster to deliver across apps.", sc: ["Consistent, reusable UI components that make new features faster to deliver across apps.", "Design · Component · Reuse · Ship"], n: 5 },
-            { t: "Multilingual UIs", d: "Arabic/English RTL support for admin portals and customer apps.", sc: ["Arabic/English RTL support for admin portals and customer apps.", "i18next · RTL · LTR · Release"], n: 6 },
+            { t: "Frontend", d: "React.js, Next.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS and Bootstrap.", sc: ["React.js, Next.js, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS and Bootstrap.", "React · Next.js · TypeScript · Tailwind"], n: 1, img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80" },
+            { t: "State & data", d: "Redux Toolkit, TanStack Query and Jotai, with ApexCharts and Chart.js for dashboards.", sc: ["Redux Toolkit, TanStack Query and Jotai, with ApexCharts and Chart.js for dashboards.", "Redux · Query · Jotai · Charts"], n: 2, img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" },
+            { t: "Backend & databases", d: "Node.js, Express.js, MySQL, PostgreSQL, MongoDB, Firebase and WebSockets.", sc: ["Node.js, Express.js, MySQL, PostgreSQL, MongoDB, Firebase and WebSockets.", "Node · Express · Database · Realtime"], n: 3, img: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=800&q=80" },
+            { t: "Tools & testing", d: "REST APIs, GraphQL, Git, Docker, Google Maps API, i18next (RTL/LTR) and React Testing Library.", sc: ["REST APIs, GraphQL, Git, Docker, Google Maps API, i18next (RTL/LTR) and React Testing Library.", "API · Git · Docker · Test"], n: 4, img: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=800&q=80" },
+            { t: "Reusable components", d: "Consistent, reusable UI components that make new features faster to deliver across apps.", sc: ["Consistent, reusable UI components that make new features faster to deliver across apps.", "Design · Component · Reuse · Ship"], n: 5, img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80" },
+            { t: "Multilingual UIs", d: "Arabic/English RTL support for admin portals and customer apps.", sc: ["Arabic/English RTL support for admin portals and customer apps.", "i18next · RTL · LTR · Release"], n: 6, img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" },
           ],
         },
         {
           h: "Education",
           cards: [
-            { t: "B.E. Computer Science Engineering", d: "Chandigarh University, Punjab — 2021 to 2025" },
-            { t: "Intermediate (BSEB, PCMB)", d: "Ram Naresh Senyai, Kurtha, Arwal, Bihar — 2019 to 2021" },
-            { t: "Matriculation (CBSE)", d: "Army Public School, Dehradun — 2018 to 2019" },
+            { t: "B.E. Computer Science Engineering", d: "Chandigarh University, Punjab — 2021 to 2025", img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" },
+            { t: "Intermediate (BSEB, PCMB)", d: "Ram Naresh Senyai, Kurtha, Arwal, Bihar — 2019 to 2021", img: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80" },
+            { t: "Matriculation (CBSE)", d: "Army Public School, Dehradun — 2018 to 2019", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" },
           ],
         },
         {
           h: "Certifications",
           cards: [
-            { t: "HTML, CSS, and JavaScript for Web Development", d: "Coursera" },
-            { t: "Python Dictionaries", d: "Coursera" },
-            { t: "Software Testing", d: "NPTEL" },
-            { t: "Data Mining", d: "NPTEL" },
+            { t: "HTML, CSS, and JavaScript for Web Development", d: "Coursera", img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" },
+            { t: "Python Dictionaries", d: "Coursera", img: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=800&q=80" },
+            { t: "Software Testing", d: "NPTEL", img: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=800&q=80" },
+            { t: "Data Mining", d: "NPTEL", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80" },
           ],
         },
         {
           h: "Get in touch",
           cards: [
-            { t: "Email", d: "royanand729@gmail.com", go: "mailto:royanand729@gmail.com", icon: "mail" },
-            { t: "Phone", d: "+91 98375 06732", go: "tel:+919837506732", icon: "phone" },
-            { t: "LinkedIn", d: "Open profile", go: "https://www.linkedin.com/", icon: "link" },
-            { t: "GitHub", d: "Open profile", go: "https://github.com/", icon: "file" },
+            { t: "Email", d: "royanand729@gmail.com", go: "mailto:royanand729@gmail.com", icon: "mail", img: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?auto=format&fit=crop&w=800&q=80" },
+            { t: "Phone", d: "+91 98375 06732", go: "tel:+919837506732", icon: "phone", img: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=800&q=80" },
+            { t: "LinkedIn", d: "Open profile", go: "https://www.linkedin.com/", icon: "link", img: "https://images.unsplash.com/photo-1611944212129-29977ae1398c?auto=format&fit=crop&w=800&q=80" },
+            { t: "GitHub", d: "Open profile", go: "https://github.com/", icon: "file", img: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=800&q=80" },
           ],
         },
       ],

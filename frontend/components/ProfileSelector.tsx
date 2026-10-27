@@ -1,5 +1,6 @@
 import Icon from "./Icon";
 import type { Chapter } from "@/data/portfolio";
+import { CHAPTER_HERO_IMAGES } from "@/lib/cardImages";
 
 interface Props {
   hidden: boolean;
@@ -33,8 +34,20 @@ export default function ProfileSelector({ hidden, onPick, owner, chapters }: Pro
               style={{ animationDelay: `${i * 70}ms` }}
               onClick={() => onPick(i)}
             >
-              <div className="av" style={{ background: `linear-gradient(135deg,${p.c[0]},${p.c[1]})` }}>
-                <Icon name={p.icon} />
+              <div
+                className="av"
+                style={{
+                  background: `linear-gradient(135deg,${p.c[0]},${p.c[1]})`,
+                  ...(p.k === 5 || p.bg
+                    ? {
+                        backgroundImage: `url("${p.bg || CHAPTER_HERO_IMAGES[p.k]}")`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }
+                    : {}),
+                }}
+              >
+                {!(p.k === 5 || p.bg) && <Icon name={p.icon} />}
               </div>
               <div className="pl">{p.label}</div>
               <small>Chapter {p.k}</small>

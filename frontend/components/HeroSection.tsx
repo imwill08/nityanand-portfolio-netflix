@@ -1,5 +1,6 @@
 import Icon from "./Icon";
 import type { Chapter } from "@/data/portfolio";
+import { getChapterHeroImage } from "@/lib/cardImages";
 
 function cleanSeparators(text?: string): string {
   if (!text) return "";
@@ -43,12 +44,32 @@ export default function HeroSection({
           ["Next chapter", "next"],
         ];
   const initial = ownerName ? ownerName.charAt(0).toUpperCase() : "N";
+  const heroImg = getChapterHeroImage(p);
 
   return (
     <header className="bill">
-      <div className="art" style={{ background: `linear-gradient(120deg,${p.c[0]},${p.c[1]})` }}>
-        <Icon name={p.icon} />
-      </div>
+      <div
+        className="bill-bg"
+        style={{
+          backgroundImage: `url("${heroImg}")`,
+          backgroundPosition: p.k === 5 ? "center 20%" : "center right",
+          filter: p.k === 5 ? "blur(3px)" : undefined,
+          transform: p.k === 5 ? "scale(1.05)" : undefined,
+        }}
+      />
+      {p.k === 5 ? (
+        <div className="bill-portrait-wrapper">
+          <img
+            src={heroImg}
+            alt={ownerName || "About me"}
+            className="bill-portrait"
+          />
+        </div>
+      ) : (
+        <div className="art" style={{ background: `linear-gradient(120deg,${p.c[0]}44,${p.c[1]}44)` }}>
+          <Icon name={p.icon} />
+        </div>
+      )}
       <div className="c">
         <div className="kick">
           <b>{initial}</b>CHAPTER {p.k}

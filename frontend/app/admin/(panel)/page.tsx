@@ -22,10 +22,12 @@ export default function Dashboard() {
       </div>
       <section className="panel">
         <h2>Welcome back</h2>
-        <p className="hint">Manage everything shown on your public portfolio. Changes save in this browser and appear on the site.</p>
+        <p className="hint">
+          Manage everything shown on your public portfolio, update chapter content, and change your profile picture or hero images.
+        </p>
         <div className="row-actions">
-          <Link className="abtn" href="/admin/chapters">Manage chapters</Link>
-          <Link className="abtn ghost" href="/admin/profile">Update contact</Link>
+          <Link className="abtn" href="/admin/chapters">Manage chapters &amp; media</Link>
+          <Link className="abtn ghost" href="/admin/profile">Change profile picture &amp; info</Link>
         </div>
       </section>
     </>

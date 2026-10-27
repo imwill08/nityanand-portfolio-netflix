@@ -7,6 +7,7 @@ import { UpdatePortfolioDto, UpdateProfileDto } from './dto/update-portfolio.dto
 
 function syncOwnerToChapters(owner: any, chapters: any[]) {
   if (!owner || !Array.isArray(chapters)) return chapters;
+  const avatarUrl = owner.avatar || owner.image;
   return chapters.map((chap) => {
     let scenes = chap.scenes;
     if (Array.isArray(scenes)) {
@@ -44,7 +45,12 @@ function syncOwnerToChapters(owner: any, chapters: any[]) {
       });
     }
 
-    return { ...chap, scenes, rows };
+    let bg = chap.bg;
+    if (avatarUrl && chap.k === 5) {
+      bg = avatarUrl;
+    }
+
+    return { ...chap, scenes, rows, bg };
   });
 }
 
@@ -129,6 +135,12 @@ export class PortfolioService implements OnModuleInit {
     let chaptersArr = Array.isArray(dto.chapters) ? dto.chapters : doc.chapters;
     if (dto.owner) {
       chaptersArr = syncOwnerToChapters(ownerObj, chaptersArr);
+    } else {
+      const ch5 = chaptersArr.find((c: any) => c.k === 5);
+      if (ch5 && ch5.bg && ownerObj && ownerObj.avatar !== ch5.bg) {
+        ownerObj = { ...ownerObj, avatar: ch5.bg };
+        updateQuery.owner = ownerObj;
+      }
     }
     updateQuery.chapters = chaptersArr;
 

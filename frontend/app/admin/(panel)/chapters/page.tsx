@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import ChapterPreview from "@/admin/ChapterPreview";
 import type { Card, Chapter, IconKey, Row } from "@/data/portfolio";
 import { usePortfolioData } from "@/lib/store";
+import { fileToDataUrl } from "@/lib/imageHelper";
+import { CHAPTER_HERO_IMAGES } from "@/lib/cardImages";
 
 const ICONS: IconKey[] = ["clip", "trend", "award", "film", "user", "mail", "phone", "link", "file"];
 const ACTIONS: ["play" | "next" | "mail", string][] = [["play", "Play story"], ["next", "Go to next chapter"], ["mail", "Send email"]];
@@ -53,12 +55,19 @@ export default function ChaptersPage() {
 
   return (
     <div className="split">
-      <div>
+      <div className="chap-sidebar">
         <div className="chap-list">
           {chapters.map((c, i) => (
             <div key={c.k} className={`chap-item${i === sel ? " on" : ""}`}>
               <button className="ci-main" onClick={() => setSel(i)}>
-                <span className="th" style={{ background: `linear-gradient(135deg,${c.c[0]},${c.c[1]})` }} />
+                <span
+                  className="th"
+                  style={{
+                    background: (c.bg || CHAPTER_HERO_IMAGES[c.k])
+                      ? `url('${c.bg || CHAPTER_HERO_IMAGES[c.k]}') center/cover no-repeat`
+                      : `linear-gradient(135deg,${c.c[0]},${c.c[1]})`,
+                  }}
+                />
                 <div><b>{c.title}</b><span>{c.label} · {c.role}</span></div>
               </button>
               <div className="ci-act">
@@ -76,7 +85,7 @@ export default function ChaptersPage() {
       </div>
 
       {form ? (
-        <form className="panel" onSubmit={save}>
+        <form className="panel chap-editor-panel" onSubmit={save}>
           <div className="ed-head">
             <h2>Edit chapter {sel + 1}{dirty && <em> · unsaved</em>}</h2>
             <div className="row-actions">
@@ -96,11 +105,117 @@ export default function ChaptersPage() {
           </div>
           <div className="fld"><label htmlFor="s">Summary</label><textarea id="s" value={form.summary} onChange={(e) => set("summary", e.target.value)} /></div>
 
-          <h3 className="sec">Look</h3>
+          <h3 className="sec">Look &amp; Media</h3>
           <div className="grid2">
             <div className="fld"><label htmlFor="ic">Icon</label><select id="ic" value={form.icon} onChange={(e) => set("icon", e.target.value as IconKey)}>{ICONS.map((i) => <option key={i}>{i}</option>)}</select></div>
+            <div className="fld">
+              <label htmlFor="bg">
+                {form.k === 5 ? "Profile / About Me Image URL" : "Hero Backdrop Image URL"}
+              </label>
+              <input
+                id="bg"
+                value={form.bg ?? ""}
+                placeholder="https://... (image URL)"
+                onChange={(e) => set("bg", e.target.value || undefined)}
+              />
+            </div>
             <div className="fld"><label htmlFor="c0">Gradient start</label><input id="c0" type="color" value={form.c[0]} onChange={(e) => set("c", [e.target.value, form.c[1]])} /></div>
             <div className="fld"><label htmlFor="c1">Gradient end</label><input id="c1" type="color" value={form.c[1]} onChange={(e) => set("c", [form.c[0], e.target.value])} /></div>
+          </div>
+
+          {/* Hero Backdrop / Profile Image Preview & Upload Controls */}
+          <div
+            style={{
+              background: "#181818",
+              border: "1px solid #282828",
+              borderRadius: 6,
+              padding: 14,
+              marginBottom: 18,
+              display: "flex",
+              gap: 16,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              style={{
+                width: 140,
+                height: 80,
+                borderRadius: 4,
+                overflow: "hidden",
+                border: "1px solid #444",
+                background: "#000",
+                flexShrink: 0,
+              }}
+            >
+              <img
+                src={form.bg || CHAPTER_HERO_IMAGES[form.k] || ""}
+                alt="Backdrop preview"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
+            </div>
+            <div style={{ flex: "1 1 240px", display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ fontSize: "13px", color: "#ddd", fontWeight: 600 }}>
+                {form.k === 5 ? "About Me Hero Portrait & Background" : "Chapter Hero Backdrop Image"}
+              </div>
+              <small style={{ color: "#888", lineHeight: 1.4 }}>
+                {form.k === 5
+                  ? "Updates the About Me billboard portrait and home profile avatar."
+                  : "Displays as the widescreen ambient backdrop in the chapter billboard."}
+              </small>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  id={`chap-bg-file-${form.k}`}
+                  style={{ display: "none" }}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      try {
+                        const dataUrl = await fileToDataUrl(file);
+                        set("bg", dataUrl);
+                      } catch (err: any) {
+                        alert(err?.message || "Failed to read image file.");
+                      }
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  className="abtn ghost sm"
+                  onClick={() => document.getElementById(`chap-bg-file-${form.k}`)?.click()}
+                >
+                  📁 Upload from computer
+                </button>
+                {form.k === 5 && (
+                  <button
+                    type="button"
+                    className="abtn ghost sm"
+                    onClick={() =>
+                      set(
+                        "bg",
+                        "https://media.licdn.com/dms/image/v2/D5603AQG5_zj4hbSbnw/profile-displayphoto-scale_400_400/B56aF3H1p6H0Ag-/0/1792999909826?e=1794441600&v=beta&t=6coUTXkIXtU-SGnUP0Rqua5w_PdeefJWI0nTrI0ibM8"
+                      )
+                    }
+                  >
+                    ↺ Reset to LinkedIn
+                  </button>
+                )}
+                {form.bg && (
+                  <button
+                    type="button"
+                    className="abtn danger sm"
+                    onClick={() => set("bg", undefined)}
+                  >
+                    Clear custom
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
 
           <h3 className="sec">Hero buttons</h3>
@@ -137,10 +252,54 @@ export default function ChaptersPage() {
                   <div className="grid2">
                     <div className="fld"><label>Title</label><input value={c.t} onChange={(e) => patchCard(ri, ci, { t: e.target.value })} /></div>
                     <div className="fld"><label>Description</label><input value={c.d ?? ""} onChange={(e) => patchCard(ri, ci, { d: e.target.value })} /></div>
+                    <div className="fld"><label>Image URL</label><input value={c.img ?? ""} placeholder="https://images.unsplash.com/... or /images/..." onChange={(e) => patchCard(ri, ci, { img: e.target.value || undefined })} /></div>
                     <div className="fld"><label>Role tag</label><input value={c.r ?? ""} onChange={(e) => patchCard(ri, ci, { r: e.target.value || undefined })} /></div>
                     <div className="fld"><label>Outcome / tech</label><input value={c.o ?? ""} onChange={(e) => patchCard(ri, ci, { o: e.target.value || undefined })} /></div>
                     <div className="fld"><label>Link (https:, mailto:, tel:)</label><input value={c.go ?? ""} onChange={(e) => patchCard(ri, ci, { go: e.target.value || undefined })} /></div>
                     <div className="fld"><label>Icon</label><select value={c.icon ?? ""} onChange={(e) => patchCard(ri, ci, { icon: (e.target.value || undefined) as IconKey | undefined })}><option value="">none</option>{ICONS.map((i) => <option key={i}>{i}</option>)}</select></div>
+                  </div>
+                  <div style={{ marginTop: 8, marginBottom: 12, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                    {c.img && (
+                      <img
+                        src={c.img}
+                        alt={c.t}
+                        style={{ width: 80, height: 45, objectFit: "cover", borderRadius: 4, border: "1px solid #444" }}
+                        onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = "none")}
+                      />
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id={`card-file-${ri}-${ci}`}
+                      style={{ display: "none" }}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          try {
+                            const dataUrl = await fileToDataUrl(file);
+                            patchCard(ri, ci, { img: dataUrl });
+                          } catch (err: any) {
+                            alert(err?.message || "Failed to read image file.");
+                          }
+                        }
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="abtn ghost sm"
+                      onClick={() => document.getElementById(`card-file-${ri}-${ci}`)?.click()}
+                    >
+                      📁 Upload image
+                    </button>
+                    {c.img && (
+                      <button
+                        type="button"
+                        className="abtn danger sm"
+                        onClick={() => patchCard(ri, ci, { img: undefined })}
+                      >
+                        Remove image
+                      </button>
+                    )}
                   </div>
                   <div className="fld"><label>Story scenes (one per line)</label><textarea value={(c.sc ?? []).join("\n")} onChange={(e) => patchCard(ri, ci, { sc: e.target.value.trim() ? lines(e.target.value) : undefined })} /></div>
                   <label className="chk"><input type="checkbox" checked={!!c.dead} onChange={(e) => patchCard(ri, ci, { dead: e.target.checked || undefined })} /> Not clickable</label>
