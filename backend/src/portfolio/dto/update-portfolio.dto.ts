@@ -21,6 +21,18 @@ export class UpdateProfileDto {
 
   @IsOptional()
   avatar?: string;
+
+  @IsOptional()
+  title?: string;
+
+  @IsOptional()
+  summary?: string;
+
+  @IsOptional()
+  professionalPortfolio?: string;
+
+  @IsOptional()
+  creativePortfolio?: string;
 }
 
 export class UpdatePortfolioDto {

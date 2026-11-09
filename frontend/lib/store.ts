@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { archive, chapters as baseChapters, owner, type Chapter } from "@/data/portfolio";
+import { chapters as baseChapters, owner, type Chapter } from "@/data/portfolio";
 
 export interface PortfolioData {
   owner: typeof owner;
@@ -42,16 +42,7 @@ export const ADMIN_PASS = "admin123";
  * This will ONLY be used when the backend API throws an error.
  */
 export const dummyData = (): PortfolioData => {
-  const chapters: Chapter[] = JSON.parse(JSON.stringify(baseChapters));
-  for (const c of chapters) {
-    if (c.cards && c.rowTitle) {
-      c.rows = [{ h: c.rowTitle, cards: c.cards }, ...(c.rows ?? [])];
-      if (c.k === 4) c.rows.push({ h: "From the archives", cards: JSON.parse(JSON.stringify(archive)) });
-      delete c.cards;
-      delete c.rowTitle;
-    }
-  }
-  return { owner: { ...owner }, chapters };
+  return { owner: { ...owner }, chapters: JSON.parse(JSON.stringify(baseChapters)) };
 };
 
 export const getToken = () => {
@@ -114,12 +105,12 @@ export function usePortfolioData() {
       if (remote) {
         // Use EXACT data returned by API (even if chapters is empty [])
         setData({
-          owner: remote.owner || { name: "", email: "", phone: "", tel: "", linkedin: "", github: "", avatar: "" },
+          owner: remote.owner ? { ...owner, ...remote.owner } : { ...owner },
           chapters: Array.isArray(remote.chapters) ? remote.chapters : [],
         });
       } else {
         setData({
-          owner: { name: "", email: "", phone: "", tel: "", linkedin: "", github: "", avatar: "" },
+          owner: { ...owner },
           chapters: [],
         });
       }

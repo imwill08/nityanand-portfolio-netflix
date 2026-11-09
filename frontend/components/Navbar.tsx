@@ -38,7 +38,7 @@ export default function Navbar({ chapter, chapters, onGo, ownerName }: Props) {
           {brand}
         </button>
 
-        {chapters.slice(0, 5).map((c, i) => (
+        {chapters.map((c, i) => (
           <a
             key={c.k}
             role="button"
@@ -55,12 +55,12 @@ export default function Navbar({ chapter, chapters, onGo, ownerName }: Props) {
             className="av"
             style={{
               background:
-                chapter.k === 5
+                chapter.icon === "user" || chapter.k === 5 || chapter.bg
                   ? `url('${getChapterHeroImage(chapter)}') center/cover no-repeat`
                   : grad,
             }}
           >
-            {chapter.k !== 5 && <Icon name={chapter.icon} />}
+            {!(chapter.icon === "user" || chapter.k === 5 || chapter.bg) && <Icon name={chapter.icon} />}
           </span>
           <span>Switch</span>
         </button>

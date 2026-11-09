@@ -45,6 +45,7 @@ export default function HeroSection({
         ];
   const initial = ownerName ? ownerName.charAt(0).toUpperCase() : "N";
   const heroImg = getChapterHeroImage(p);
+  const isPortraitChapter = p.icon === "user" || p.k === 5 || (p.label && p.label.toLowerCase().includes("about"));
 
   return (
     <header className="bill">
@@ -52,12 +53,12 @@ export default function HeroSection({
         className="bill-bg"
         style={{
           backgroundImage: `url("${heroImg}")`,
-          backgroundPosition: p.k === 5 ? "center 20%" : "center right",
-          filter: p.k === 5 ? "blur(3px)" : undefined,
-          transform: p.k === 5 ? "scale(1.05)" : undefined,
+          backgroundPosition: isPortraitChapter ? "center 20%" : "center right",
+          filter: isPortraitChapter ? "blur(3px)" : undefined,
+          transform: isPortraitChapter ? "scale(1.05)" : undefined,
         }}
       />
-      {p.k === 5 ? (
+      {isPortraitChapter ? (
         <div className="bill-portrait-wrapper">
           <img
             src={heroImg}

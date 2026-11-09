@@ -251,11 +251,35 @@ export default function ProfilePage() {
       <h3 style={{ fontSize: "1.1rem", marginBottom: 14, color: "#fff" }}>Basic Information</h3>
       <div className="grid2">
         {f("name", "Name")}
+        {f("title" as any, "Professional Headline / Roles")}
         {f("email", "Email")}
         {f("phone", "Phone")}
         {f("tel", "Phone (tel: link)")}
         {f("linkedin", "LinkedIn URL")}
         {f("github", "GitHub URL")}
+        {f("professionalPortfolio" as any, "Professional Portfolio URL")}
+        {f("creativePortfolio" as any, "Creative Portfolio URL")}
+      </div>
+
+      <div className="fld" style={{ marginTop: 14 }}>
+        <label htmlFor="summary">Professional Summary</label>
+        <textarea
+          id="summary"
+          rows={3}
+          style={{
+            width: "100%",
+            background: "#181818",
+            border: "1px solid #333",
+            color: "#fff",
+            padding: "10px 12px",
+            borderRadius: 4,
+            fontFamily: "inherit",
+            fontSize: "14px",
+            lineHeight: 1.5,
+          }}
+          value={(o as any).summary ?? ""}
+          onChange={(e) => setO({ ...o, summary: e.target.value } as any)}
+        />
       </div>
 
       <div style={{ marginTop: 24, display: "flex", gap: 12 }}>

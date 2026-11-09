@@ -108,6 +108,15 @@ export function getCardImage(c: Card, chapterK?: number, cardIndex?: number): st
   }
 
   // Skills & Toolkit
+  if (text.includes("ai coding") || text.includes("antigravity") || text.includes("cursor") || text.includes("copilot")) {
+    return "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80";
+  }
+  if (text.includes("vibe coding") || text.includes("lovable") || text.includes("bolt.new") || text.includes("prototyping")) {
+    return "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
+  }
+  if (text.includes("gemini") || text.includes("llm") || text.includes("ai-powered") || text.includes("intelligent features")) {
+    return "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80";
+  }
   if (text.includes("frontend") || text.includes("react") || text.includes("next.js")) {
     return "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80";
   }

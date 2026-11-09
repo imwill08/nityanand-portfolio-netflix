@@ -1,7 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Portfolio, PortfolioDocument } from './schemas/portfolio.schema';
+import { PortfolioRepository } from './portfolio.repository';
+import { PortfolioDocument } from './schemas/portfolio.schema';
 import { initialPortfolioData } from '../seed/initial-data';
 import { UpdatePortfolioDto, UpdateProfileDto } from './dto/update-portfolio.dto';
 
@@ -82,10 +81,7 @@ function cleanCorruptedSymbols(chapters: any[]) {
 export class PortfolioService implements OnModuleInit {
   private readonly logger = new Logger(PortfolioService.name);
 
-  constructor(
-    @InjectModel(Portfolio.name)
-    private readonly portfolioModel: Model<Portfolio>,
-  ) {}
+  constructor(private readonly portfolioRepository: PortfolioRepository) {}
 
   async onModuleInit() {
     await this.seedIfNeeded();
@@ -93,12 +89,26 @@ export class PortfolioService implements OnModuleInit {
 
   async seedIfNeeded(): Promise<PortfolioDocument> {
     try {
-      const existing = await this.portfolioModel.findOne().exec();
+      const existing = await this.portfolioRepository.findOne();
       if (!existing) {
         this.logger.log('No portfolio found in MongoDB. Seeding initial data...');
-        const created = new this.portfolioModel(initialPortfolioData);
-        return await created.save();
+        return await this.portfolioRepository.create(initialPortfolioData as any);
       }
+
+      // Check if existing data is outdated (e.g. fewer than 5 chapters, old dates or missing AI skills)
+      const chaptersStr = JSON.stringify(existing.chapters || []);
+      const needsSync =
+        !existing.chapters ||
+        existing.chapters.length < 5 ||
+        !existing.owner?.title ||
+        chaptersStr.includes('2021 to 2025') ||
+        !chaptersStr.includes('AI Coding Assistants');
+
+      if (needsSync) {
+        this.logger.log('Detected outdated portfolio data. Auto-syncing with latest resume data...');
+        return await this.syncToLatest();
+      }
+
       return existing;
     } catch (err) {
       this.logger.error('Failed to seed portfolio database:', err);
@@ -106,8 +116,32 @@ export class PortfolioService implements OnModuleInit {
     }
   }
 
+  async syncToLatest(): Promise<PortfolioDocument> {
+    const existing = await this.portfolioRepository.findOne();
+    if (!existing) {
+      return await this.portfolioRepository.create(initialPortfolioData as any);
+    }
+    const updated = await this.portfolioRepository.findByIdAndUpdate(
+      existing._id,
+      {
+        $set: {
+          owner: {
+            ...initialPortfolioData.owner,
+            ...(existing.owner || {}),
+            title: initialPortfolioData.owner.title,
+            summary: initialPortfolioData.owner.summary,
+          },
+          chapters: initialPortfolioData.chapters,
+        },
+      },
+      { new: true, runValidators: false },
+    );
+    this.logger.log('Portfolio database successfully synchronized with latest resume data.');
+    return updated || existing;
+  }
+
   async getPortfolio(): Promise<any> {
-    let doc = await this.portfolioModel.findOne().exec();
+    let doc = await this.portfolioRepository.findOne();
     if (!doc) {
       doc = await this.seedIfNeeded();
     }
@@ -115,7 +149,9 @@ export class PortfolioService implements OnModuleInit {
       const cleanedChapters = cleanCorruptedSymbols(doc.chapters);
       const str = JSON.stringify(doc.chapters);
       if (str.includes('? Appz') || str.includes('▶') || str.includes('ⓘ') || str.includes('\uFFFD')) {
-        this.portfolioModel.findByIdAndUpdate(doc._id, { $set: { chapters: cleanedChapters } }).exec().catch(() => {});
+        this.portfolioRepository
+          .findByIdAndUpdate(doc._id, { $set: { chapters: cleanedChapters } })
+          .catch(() => {});
       }
       return typeof doc.toObject === 'function' ? { ...doc.toObject(), chapters: cleanedChapters } : doc;
     }
@@ -144,9 +180,11 @@ export class PortfolioService implements OnModuleInit {
     }
     updateQuery.chapters = chaptersArr;
 
-    const updated = await this.portfolioModel
-      .findByIdAndUpdate(doc._id, { $set: updateQuery }, { new: true, runValidators: false })
-      .exec();
+    const updated = await this.portfolioRepository.findByIdAndUpdate(
+      doc._id,
+      { $set: updateQuery },
+      { new: true, runValidators: false },
+    );
 
     return updated || doc;
   }
@@ -156,40 +194,38 @@ export class PortfolioService implements OnModuleInit {
     const ownerObj = { ...doc.owner, ...ownerDto };
     const chaptersArr = syncOwnerToChapters(ownerObj, doc.chapters);
 
-    const updated = await this.portfolioModel
-      .findByIdAndUpdate(
-        doc._id,
-        { $set: { owner: ownerObj, chapters: chaptersArr } },
-        { new: true, runValidators: false },
-      )
-      .exec();
+    const updated = await this.portfolioRepository.findByIdAndUpdate(
+      doc._id,
+      { $set: { owner: ownerObj, chapters: chaptersArr } },
+      { new: true, runValidators: false },
+    );
 
     return updated || doc;
   }
 
   async updateChapters(chapters: any[]): Promise<PortfolioDocument> {
     const doc = await this.getPortfolio();
-    const updated = await this.portfolioModel
-      .findByIdAndUpdate(doc._id, { $set: { chapters } }, { new: true, runValidators: false })
-      .exec();
+    const updated = await this.portfolioRepository.findByIdAndUpdate(
+      doc._id,
+      { $set: { chapters } },
+      { new: true, runValidators: false },
+    );
 
     return updated || doc;
   }
 
   async resetToDefaults(): Promise<PortfolioDocument> {
     const doc = await this.getPortfolio();
-    const updated = await this.portfolioModel
-      .findByIdAndUpdate(
-        doc._id,
-        {
-          $set: {
-            owner: initialPortfolioData.owner,
-            chapters: initialPortfolioData.chapters,
-          },
+    const updated = await this.portfolioRepository.findByIdAndUpdate(
+      doc._id,
+      {
+        $set: {
+          owner: initialPortfolioData.owner,
+          chapters: initialPortfolioData.chapters,
         },
-        { new: true, runValidators: false },
-      )
-      .exec();
+      },
+      { new: true, runValidators: false },
+    );
 
     return updated || doc;
   }

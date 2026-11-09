@@ -47,7 +47,7 @@ export default function ProjectCarousel({ row, grad, onCard }: Props) {
                 </i>
               ) : null}
               <div className="card-content">
-                {c.r && <span className="card-tag">{c.r}</span>}
+                {c.r && c.r !== "React Developer" && <span className="card-tag">{c.r}</span>}
                 <b>{c.t}</b>
                 {c.d && <span>{c.d}</span>}
               </div>

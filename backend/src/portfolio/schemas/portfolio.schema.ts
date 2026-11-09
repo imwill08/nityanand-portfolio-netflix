@@ -23,6 +23,18 @@ export class Owner {
 
   @Prop({ default: 'https://media.licdn.com/dms/image/v2/D5603AQG5_zj4hbSbnw/profile-displayphoto-scale_400_400/B56aF3H1p6H0Ag-/0/1792999909826?e=1794441600&v=beta&t=6coUTXkIXtU-SGnUP0Rqua5w_PdeefJWI0nTrI0ibM8' })
   avatar?: string;
+
+  @Prop({ default: 'React Developer | Frontend Developer | Software Developer' })
+  title?: string;
+
+  @Prop()
+  summary?: string;
+
+  @Prop({ default: 'https://nityanand-portfolio-netflix.vercel.app/' })
+  professionalPortfolio?: string;
+
+  @Prop({ default: 'https://nityanand-portfolio-netflix.vercel.app/' })
+  creativePortfolio?: string;
 }
 
 @Schema({ _id: false })

@@ -38,7 +38,7 @@ export default function ProfileSelector({ hidden, onPick, owner, chapters }: Pro
                 className="av"
                 style={{
                   background: `linear-gradient(135deg,${p.c[0]},${p.c[1]})`,
-                  ...(p.k === 5 || p.bg
+                  ...(p.k === 5 || p.icon === "user" || p.bg
                     ? {
                         backgroundImage: `url("${p.bg || CHAPTER_HERO_IMAGES[p.k]}")`,
                         backgroundSize: "cover",
@@ -47,7 +47,7 @@ export default function ProfileSelector({ hidden, onPick, owner, chapters }: Pro
                     : {}),
                 }}
               >
-                {!(p.k === 5 || p.bg) && <Icon name={p.icon} />}
+                {!(p.k === 5 || p.icon === "user" || p.bg) && <Icon name={p.icon} />}
               </div>
               <div className="pl">{p.label}</div>
               <small>Chapter {p.k}</small>

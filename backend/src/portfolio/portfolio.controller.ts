@@ -37,4 +37,10 @@ export class PortfolioController {
   async resetToDefaults() {
     return this.portfolioService.resetToDefaults();
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('sync')
+  async syncToLatest() {
+    return this.portfolioService.syncToLatest();
+  }
 }
